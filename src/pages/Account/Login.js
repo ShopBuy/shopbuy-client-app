@@ -79,8 +79,9 @@ function Login() {
 
             // Lưu trữ token vào localStorage
             localStorage.setItem("id", response.data.data.id);
+            localStorage.setItem("email", response.data.data.email);
             localStorage.setItem('token', response.data.data.token);
-            localStorage.setItem("role", response.data.data.role);
+            localStorage.setItem("roleId", response.data.data.roleId);
 
             // setSuccessMsg(`Hello dear ${email}`);
             // setEmail("");
@@ -91,6 +92,9 @@ function Login() {
             setTimeout(() => {
               toast.dismiss();
             }, 3000);
+
+
+
 
             setTimeout(() => {
               navigate('/');

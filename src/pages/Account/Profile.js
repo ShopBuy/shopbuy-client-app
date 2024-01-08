@@ -1,7 +1,34 @@
-import React from 'react'
-import {Link} from "react-router-dom";
+import React, {useEffect, useState} from 'react'
+import {Link, useNavigate} from "react-router-dom";
+import {SHOPBUY_API} from "../../constants/api";
+import axios from "axios";
 
 function Profile() {
+  const [user, setUser] = useState();
+  const navigate = useNavigate();
+
+  const fetchUserDetail = async () => {
+    const token = localStorage.getItem("token");
+    try {
+      const response = await axios.get(
+        `${SHOPBUY_API}/users/profile`,
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setUser(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserDetail();
+  }, []);
 
   return (
 
@@ -77,7 +104,14 @@ function Profile() {
               <p className="font-titleFont text-base font-semibold">
                 EMAIL ADDRESS
               </p>
-              <p className="bg-gray-100 p-2 border-b border-blue-500">nguyentien606868@gmail.com</p>
+
+              <input
+                name="email"
+                value={user?.email}
+                className="bg-gray-100 p-2 border-b border-blue-500">
+              </input>
+
+
             </div>
             <br/>
 
@@ -85,7 +119,12 @@ function Profile() {
               <p className="font-titleFont text-base font-semibold">
                 FULL NAME
               </p>
-              <p className="bg-gray-100 p-2 border-b border-blue-500">Nguyễn Tiến</p>
+              <input
+                name="email"
+                value={user?.fullName}
+                className="bg-gray-100 p-2 border-b border-blue-500">
+              </input>
+
             </div>
             <br/>
 
@@ -93,7 +132,12 @@ function Profile() {
               <p className="font-titleFont text-base font-semibold">
                 BIRTHDAY
               </p>
-              <p className="bg-gray-100 p-2 border-b border-blue-500">01/01/1999</p>
+              <input
+                name="email"
+                value={user?.dateOfBirth}
+                className="bg-gray-100 p-2 border-b border-blue-500">
+              </input>
+
             </div>
             <br/>
 
@@ -101,7 +145,13 @@ function Profile() {
               <p className="font-titleFont text-base font-semibold">
                 GENDER
               </p>
-              <p className="bg-gray-100 p-2 border-b border-blue-500">Male</p>
+
+              <input
+                name="email"
+                value={user?.gender}
+                className="bg-gray-100 p-2 border-b border-blue-500">
+              </input>
+
             </div>
             <br/>
 
@@ -109,24 +159,30 @@ function Profile() {
               <p className="font-titleFont text-base font-semibold">
                 MOBILE PHONE
               </p>
-              <p className="bg-gray-100 p-2 border-b border-blue-500">0123456789</p>
+              <input
+                name="email"
+                value={user?.phoneNumber}
+                className="bg-gray-100 p-2 border-b border-blue-500">
+              </input>
+
+
             </div>
             <br/>
             <div>
-            <Link to="/edit-profile">
-            <button
-              className="bg-black hover:bg-red-600 text-white hover:text-white cursor-pointer w-1/2 text-base font-medium h-10 duration-300"
-            > EDIT PROFILE
-            </button>
-            </Link>
+              <Link to="/edit-profile">
+                <button
+                  className="bg-black hover:bg-red-600 text-white hover:text-white cursor-pointer w-1/2 text-base font-medium h-10 duration-300"
+                > EDIT PROFILE
+                </button>
+              </Link>
             </div>
 
           </div>
         </div>
 
-
       </div>
     </div>
-);
+  );
 }
+
 export default Profile

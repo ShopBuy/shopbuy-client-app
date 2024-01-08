@@ -1,0 +1,1 @@
+export const SHOPBUY_API = "http://localhost:8080/api";
